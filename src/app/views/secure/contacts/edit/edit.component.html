@@ -1,0 +1,223 @@
+<div class="card mt-4">
+  <div class="card-header">
+    <div class="row">
+      <div class="col order-1 order-sm-0">
+        <button
+          class="btn btn-primary d-flex align-items-center"
+          title="Back"
+          [disabled]="isLoading"
+          routerLink="/contacts"
+        >
+          <span class="min-width-18px">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </span>
+          <span class="text ml-1 ml-sm-o d-none d-sm-block">Back</span>
+        </button>
+      </div>
+      <div class="col-12 col-sm-auto order-0 order-sm-1">
+        <h2 class="text-center">Update Contact Details</h2>
+      </div>
+      <div class="col order-2 text-right">
+        <app-loading-button
+          *ngIf="hasContact"
+          [disabled]="editContactsForm.invalid"
+          [buttonText]="'Update'"
+          [title]="'Click to update contact details'"
+          [isLoading]="isLoading"
+          [loadingText]="'Updating ...'"
+          [hideTextOnSM]="true"
+          [buttonIconClass]="'fas fa-check'"
+          (buttonClick)="onFormUpdate()"
+        ></app-loading-button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="initialLoading" class="col text-center text-primary mt-5 pt-5">
+    <i class="fa fa-spinner fa-pulse fa-5x" aria-hidden="true"></i>
+    <h5 class="mt-3">Loading...</h5>
+  </div>
+  <div
+    *ngIf="!hasContact && !initialLoading"
+    class="d-flex align-items-center justify-content-center mt-4 h-100 alert alert-danger"
+  >
+    <h5><i class="fa fa-meh" aria-hidden="true"></i> Oops! contact found.</h5>
+  </div>
+  <div class="card-body">
+    <form *ngIf="hasContact && !initialLoading" [formGroup]="editContactsForm" autocomplete="off">
+      <div class="alert alert-warning" *ngIf="hasValidationError">
+        <p>Please fix the following</p>
+        <ul>
+          <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label for="category">Category <span class="text-danger">*</span></label>
+          <ng-select
+            [items]="categories"
+            [clearable]="false"
+            [searchable]="true"
+            bindValue="id"
+            bindLabel="name"
+            (change)="getSubCategoriesNamesIds()"
+            placeholder="Select Category"
+            formControlName="category"
+            notFoundText="No categories found"
+          >
+          </ng-select>
+          <div *ngIf="formControls.category.touched && formControls.category.invalid">
+            <small class="text-danger" *ngIf="formControls.category.errors?.required"
+              >Category is required</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="subCategory">Sub Category <span class="text-danger">*</span></label>
+          <ng-select
+            [items]="subCategories"
+            [clearable]="true"
+            [searchable]="true"
+            bindValue="id"
+            bindLabel="name"
+            placeholder="Select Sub category"
+            formControlName="subCategory"
+            notFoundText="No sub categories found"
+          >
+          </ng-select>
+          <div *ngIf="formControls.subCategory.touched && formControls.subCategory.invalid">
+            <small class="text-danger" *ngIf="formControls.subCategory.errors?.required"
+              >Sub category is required</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="terminal">Terminal <span class="text-danger">*</span></label>
+          <ng-select
+            [items]="terminals"
+            [clearable]="false"
+            [searchable]="true"
+            bindValue="id"
+            bindLabel="name"
+            placeholder="Select Terminal"
+            formControlName="terminal"
+            notFoundText="No terminals found"
+          >
+          </ng-select>
+          <div *ngIf="formControls.terminal.touched && formControls.terminal.invalid">
+            <small class="text-danger" *ngIf="formControls.terminal.errors?.required"
+              >Terminal is required</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="name"> Name <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Enter Name"
+          />
+          <div *ngIf="formControls.name.touched && formControls.name.invalid">
+            <small class="text-danger" *ngIf="formControls.name.errors?.required"
+              >Name is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.name.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.maxlength"
+              >Maximum length is {{ formControls.name.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="email">Email Address <span class="text-danger">*</span></label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+          <div *ngIf="formControls.email.touched && formControls.email.invalid">
+            <small class="text-danger" *ngIf="formControls.email.errors?.required"
+              >Email is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.email.errors?.pattern"
+              >Enter a valid email</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="mobile">Mobile No <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="mobile"
+            formControlName="mobile_no"
+            class="form-control"
+            placeholder="Enter mobile number"
+            maxlength="10"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            allowPaste="false"
+            (focusout)="handlePhNoValidation()"
+            (input)="handlePhNoValidation()"
+            digitOnly
+          />
+          <div *ngIf="formControls.mobile_no.touched && formControls.mobile_no.invalid">
+            <small
+              class="text-danger"
+              *ngIf="formControls.mobile_no.errors?.minlength; else elseBlock"
+              >Minimum required length is
+              {{ formControls.mobile_no.errors.minlength.requiredLength }}
+            </small>
+            <small class="text-danger" *ngIf="formControls.mobile_no.errors?.maxlength"
+              >Maximum allowed length is
+              {{ formControls.mobile_no.errors.maxlength.requiredLength }}
+            </small>
+            <ng-template #elseBlock>
+              <small class="text-danger" *ngIf="formControls.mobile_no.errors?.pattern"
+                >Enter a valid mobile number
+              </small>
+            </ng-template>
+          </div>
+          <div *ngIf="!formControls.mobile_no.touched || !formControls.mobile_no.invalid">
+            <small class="text-danger" *ngIf="phNoValidator"
+              >Mobile or Landline number required
+            </small>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="landline">Landline No <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="landline"
+            formControlName="landline"
+            class="form-control"
+            placeholder="Enter landline number"
+            allowPaste="false"
+            (input)="handlePhNoValidation()"
+            maxlength="14"
+            (focusout)="handlePhNoValidation()"
+          />
+          <div *ngIf="formControls.landline.touched && formControls.landline.invalid">
+            <small class="text-danger" *ngIf="formControls.landline.errors?.minlength"
+              >Minimum required length is
+              {{ formControls.landline.errors.minlength.requiredLength }}
+            </small>
+            <small class="text-danger" *ngIf="formControls.landline.errors?.maxlength"
+              >Maximum allowed length is {{ formControls.landline.errors.maxlength.requiredLength }}
+            </small>
+          </div>
+          <div *ngIf="!formControls.landline.touched || !formControls.landline.invalid">
+            <small class="text-danger" *ngIf="phNoValidator"
+              >Mobile or Landline number required
+            </small>
+          </div>
+        </div>
+        <div class="text-center mb-4"></div>
+      </div>
+    </form>
+  </div>
+</div>

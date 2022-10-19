@@ -1,0 +1,53 @@
+<div class="card mt-4">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm col-md order-1 order-md-0">
+        <app-search
+          [searchValue]="searchValue"
+          (search)="onSearch()"
+          (searchChange)="onSearchChange($event)"
+        ></app-search>
+      </div>
+      <div class="col-md order-0 order-md-1">
+        <h2 class="text-center">Terminal Locations</h2>
+      </div>
+      <div class="col-sm col-md order-2 mt-2 mt-sm-0">
+        <ng-template [ngxPermissionsOnly]="permissionList.canAddTerminal">
+          <button
+            class="btn btn-primary btn-ripple float-right rounded-pill d-flex align-items-center"
+            title="Click to add new terminal"
+            routerLink="./new"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span class="d-none d-sm-block ml-1">Add Terminal Location</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <app-ag-grid
+      [rowData]="terminalList"
+      [columnDefs]="columnDefs"
+      [defaultColumnDefs]="defaultColumDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [deleteModelContent]="deleteModelContent"
+      [hasInvite]="false"
+      [hasDetails]="false"
+      [hasEdit]="true"
+      [hasDelete]="true"
+      (editRow)="onEdit($event)"
+      (deleteRow)="onDelete($event)"
+      (gridReady)="onGridReady($event)"
+      (floatingFilter)="onFilterColumn($event)"
+      [stateName]="'terminalState'"
+    >
+    </app-ag-grid>
+    <app-pagination
+      [pagination]="pagination"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

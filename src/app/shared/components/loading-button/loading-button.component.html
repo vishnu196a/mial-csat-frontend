@@ -1,0 +1,17 @@
+<button
+  type="submit"
+  class="btn"
+  [title]="title"
+  [ngClass]="buttonClass"
+  [disabled]="disabled || isLoading"
+  (click)="click()"
+>
+  <span *ngIf="!isLoading"
+    ><span class="d-sm-inline" [class.d-none]="hideTextOnSM">{{ buttonText }}</span
+    ><i *ngIf="buttonIconClass" class="ml-1" [class]="buttonIconClass"></i
+  ></span>
+  <span *ngIf="isLoading"
+    ><span class="d-sm-inline" [class.d-none]="hideTextOnSM">{{ loadingText }}</span
+    ><i class="fa fa-spinner fa-spin ml-1"></i
+  ></span>
+</button>

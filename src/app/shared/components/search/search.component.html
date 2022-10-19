@@ -1,0 +1,21 @@
+<div class="input-group">
+  <span *ngIf="continuousSearch" class="input-group-text">
+    <i class="fa fa-search" aria-hidden="true"></i>
+  </span>
+  <input
+    class="form-control"
+    type="search"
+    placeholder="Enter atleast 3 letters..."
+    [(ngModel)]="searchValue"
+    (ngModelChange)="onSearchModelChange()"
+    (change)="onSearch()"
+  />
+  <button
+    *ngIf="!continuousSearch"
+    class="btn btn-primary"
+    [disabled]="isButtonDisabled()"
+    (click)="onSearch()"
+  >
+    <i class="fa fa-search" aria-hidden="true"></i> <span class="d-none d-sm-inline">Search</span>
+  </button>
+</div>

@@ -1,0 +1,109 @@
+<div class="card mt-4">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm col-md order-1 order-md-0">
+        <app-search
+          [searchValue]="searchValue"
+          (search)="onSearch()"
+          (searchChange)="onSearchChange($event)"
+        ></app-search>
+      </div>
+      <div class="col-md order-0 order-md-1">
+        <h2 class="text-center">Category Reports</h2>
+      </div>
+      <div class="col-sm col-md order-2 mt-2 mt-sm-0"></div>
+    </div>
+  </div>
+  <div class="row m-0 mt-2">
+    <div class="col-sm-6 col-md-6 col-12" *ngIf="showPieChart">
+      <canvas
+        baseChart
+        [data]="pieChartData"
+        [chartType]="pieChartType"
+        [options]="pieChartOptions"
+        [labels]="pieChartLabels"
+        [legend]="pieChartLegend"
+      >
+      </canvas>
+      <div class="d-flex align-items-center col-6 justify-content-between pt-4 pr-0">
+        <h6 class="m-0 p-0 font-weight-bold">
+          From : <span class="font-weight-normal">{{ fromDate | date }}</span>
+        </h6>
+        <h6 class="m-0 p-0 font-weight-bold">
+          To : <span class="font-weight-normal"> {{ toDate | date }}</span>
+        </h6>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-12">
+      <div class="row">
+        <div class="col-5">
+          <label for="date-input">From Date</label>
+          <input
+            id="date-input"
+            type="datetime-local"
+            placeholder="From Date"
+            class="form-control"
+            [max]="maxDate"
+            [min]="minDate"
+            [(ngModel)]="fromDate"
+            (change)="getListData()"
+          />
+        </div>
+        <div class="col-5">
+          <div class="row align-items-center">
+            <label for="date-input">To Date</label>
+            <input
+              id="date-input"
+              type="datetime-local"
+              placeholder="To Date"
+              class="form-control"
+              [(ngModel)]="toDate"
+              [max]="maxDate"
+              [min]="minDate"
+              (change)="getListData()"
+            />
+            <small class="text-danger" *ngIf="toDateValidator"
+              >To date should be greater than from date</small
+            >
+          </div>
+        </div>
+        <div class="col-2 d-flex align-items-end">
+          <button
+            class="btn btn-outline-primary"
+            title="Click here to download category report"
+            aria-label="report"
+            (click)="downloadCategoryReport()"
+          >
+            <i class="fa fa-download" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <app-ag-grid
+      [rowData]="categoryReports"
+      [columnDefs]="columnDefs"
+      [defaultColumnDefs]="defaultColumDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [canView]="permissionList.canViewCategoryReports"
+      (gridReady)="onGridReady($event)"
+      (view)="onView($event)"
+      (floatingFilter)="onFilterColumn($event)"
+      [stateName]="'categoryReportsState'"
+      [hasDetails]="true"
+      [hasEdit]="false"
+      [hasDelete]="false"
+      [hasDownload]="true"
+      (sortChanged)="onSortChanged($event)"
+      (download)="onDownload($event)"
+    >
+    </app-ag-grid>
+    <app-pagination
+      [pagination]="pagination"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

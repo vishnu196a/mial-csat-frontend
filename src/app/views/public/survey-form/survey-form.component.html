@@ -1,0 +1,190 @@
+<div class="card m-3 shadow border-primary" [@cardFlip]="data.state">
+  <div class="card-body face back" *ngIf="!isResponseSubmitted">
+    <form
+      [formGroup]="viewSurveyForm"
+      *ngIf="surveyFormDetails"
+      (submit)="onFormSubmit()"
+      autocomplete="off"
+    >
+      <div class="text-center">
+        <img src="assets/img/brand/brand-logo.png" alt="Brand logo" />
+      </div>
+      <div class="col mt-4">
+        <div class="col-12 col-sm-auto order-0 order-sm-1">
+          <h2 class="text-center">{{ surveyFormDetails.name }}</h2>
+        </div>
+      </div>
+      <div formArrayName="questions">
+        <section
+          class="container border mt-3 p-3"
+          *ngFor="let formData of questionsFormControl.controls; let i = index"
+        >
+          <div formGroupName="{{ i }}">
+            <div class="row">
+              <div class="col-12">
+                <h5>{{ i + 1 }}. {{ formData.value.question }}</h5>
+                <ngb-rating
+                  formControlName="rating"
+                  *ngIf="formData.value.type === 'Ratings'"
+                  style="color: darkorange; font-size: 25px"
+                  [max]="formData.value.ratings"
+                ></ngb-rating>
+                <div *ngIf="formData.value.type === 'Multi Select'">
+                  <div
+                    *ngFor="let options of formData.value.multi_select; let ind = index"
+                    class="form-group form-check"
+                  >
+                    <label class="m-0 p-0">
+                      <input
+                        type="checkbox"
+                        value="{{ options.value }}"
+                        (change)="checked(i, ind)"
+                        [disabled]="options.isDisabled"
+                      />
+                      <span class="ml-2">{{ options.value }}</span>
+                    </label>
+                    <div
+                      *ngIf="
+                        formData.value.dependent_questions &&
+                        formData.value.dependent_questions.length == 0 &&
+                        options.isSelected
+                      "
+                    >
+                      <ngb-rating
+                        (rateChange)="multiRateChange(i, $event, options.value)"
+                        style="color: darkorange; font-size: 25px"
+                        [max]="5"
+                      ></ngb-rating>
+                    </div>
+                    <div *ngIf="formData.value.dependent_questions">
+                      <div formArrayName="dependent_questions">
+                        <div
+                          class="container m-0 p-0 mt-2 ml-2"
+                          *ngFor="
+                            let dFormData of getDependentQuestions(formData);
+                            let dind = index
+                          "
+                        >
+                          <div formGroupName="{{ dind }}">
+                            <div
+                              *ngIf="
+                                dFormData.value.isVisible &&
+                                dFormData.value.option === options.value
+                              "
+                            >
+                              <h6>
+                                {{ dFormData.value.question }}
+
+                                <span>
+                                  <ngb-rating
+                                    (rateChange)="depRateChange($event, i, dind)"
+                                    style="color: darkorange; font-size: 25px"
+                                    [max]="dFormData.value.ratings"
+                                  ></ngb-rating>
+                                </span>
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="formData.value.type === 'Options'">
+                  <div
+                    class="ml-4 mb-2"
+                    *ngFor="let option of formData.value.options; let x = index"
+                  >
+                    <div class="row d-flex align-items-center">
+                      <label class="m-0">
+                        <input
+                          type="radio"
+                          (change)="optionChange(i, x)"
+                          value="{{ option }}"
+                          formControlName="optionText"
+                        />
+                        <span class="ml-1">{{ option }}</span>
+                      </label>
+                      <div
+                        *ngIf="
+                          formData.value.dependent_questions &&
+                          formData.value.dependent_questions.length == 0 &&
+                          formData.value.option_selected == option
+                        "
+                      >
+                        <ngb-rating
+                          (rateChange)="optionRateChange($event, i)"
+                          style="color: darkorange; font-size: 25px"
+                          [max]="5"
+                        ></ngb-rating>
+                      </div>
+                    </div>
+
+                    <div *ngIf="formData.value.dependent_questions">
+                      <div formArrayName="dependent_questions">
+                        <div
+                          class="container m-0 p-0 ml-2"
+                          *ngFor="
+                            let dFormData of getDependentQuestions(formData);
+                            let dind = index
+                          "
+                        >
+                          <div formGroupName="{{ dind }}">
+                            <div
+                              *ngIf="dFormData.value.isVisible && dFormData.value.option === option"
+                            >
+                              <h6>
+                                {{ dFormData.value.question }}
+
+                                <span>
+                                  <ngb-rating
+                                    (rateChange)="depRateChange($event, i, dind)"
+                                    style="color: darkorange; font-size: 25px"
+                                    [max]="dFormData.value.ratings"
+                                  ></ngb-rating>
+                                </span>
+                              </h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2" *ngIf="formData.value.type === 'Free Text'">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    formControlName="answer"
+                    placeholder="Enter your answer here"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="row mt-4">
+        <app-loading-button
+          class="mx-auto"
+          [isLoading]="isLoading"
+          [disabled]="questionsFormControl.invalid"
+          [buttonText]="'Submit'"
+          [title]="'Click to submit'"
+          [loadingText]="'Submitting...'"
+        >
+        </app-loading-button>
+      </div>
+    </form>
+  </div>
+  <div class="card-body face front" *ngIf="isResponseSubmitted">
+    <div class="form-group text-center">
+      <img alt="MIAL logo" src="assets/img/brand/brand-logo.png" />
+    </div>
+    <form class="form-horizontal">
+      <h4 class="text-center font-weight-bold">
+        We appreciate your feedback. Thank you! Team – CSMIA
+      </h4>
+    </form>
+  </div>
+</div>

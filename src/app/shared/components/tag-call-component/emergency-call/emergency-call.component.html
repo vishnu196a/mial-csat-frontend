@@ -1,0 +1,146 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">Send Emergency Email</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form
+    [formGroup]="tagEmergencyCallForm"
+    (submit)="onFormSubmit()"
+    class="mt-3"
+    autocomplete="off"
+  >
+    <div class="card">
+      <div class="alert alert-warning" *ngIf="hasValidationError">
+        <p>Please fix the following</p>
+        <ul>
+          <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+        </ul>
+      </div>
+      <div class="row card-body">
+        <div class="form-group col-12 col-md-6">
+          <label for="department">Department</label>
+          <input
+            type="text"
+            id="department"
+            formControlName="department"
+            class="form-control"
+            placeholder="Enter department"
+          />
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="contactPerson">Contact Person <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="contactPerson"
+            class="form-control"
+            placeholder="Enter contactPerson"
+          />
+          <div *ngIf="formControls.contactPerson.touched && formControls.contactPerson.invalid">
+            <small class="text-danger" *ngIf="formControls.contactPerson.errors?.required"
+              >Contact person is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.contactPerson.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.contactPerson.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.contactPerson.errors?.maxlength"
+              >Maximum length is
+              {{ formControls.contactPerson.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="name"> Phone Number</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="phoneNo"
+            class="form-control"
+            placeholder="Enter Phone Number"
+          />
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="email"
+            >Email Id <small>(separate email Ids by ";")</small> <span class="text-danger">*</span>
+          </label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+          <div *ngIf="formControls.email.touched && formControls.email.invalid">
+            <small class="text-danger" *ngIf="formControls.email.errors?.required"
+              >Email is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.email.errors?.pattern"
+              >Enter a valid email</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="subject">Subject <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="subject"
+            class="form-control"
+            placeholder="Enter subject"
+          />
+          <div *ngIf="formControls.subject.touched && formControls.subject.invalid">
+            <small class="text-danger" *ngIf="formControls.subject.errors?.required"
+              >Subject is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.subject.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.subject.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.subject.errors?.maxlength"
+              >Maximum length is {{ formControls.subject.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="Comments"> Comments <span class="text-danger">*</span> </label>
+          <textarea
+            type="text"
+            id="Comments"
+            formControlName="comments"
+            class="form-control"
+            placeholder="Enter Comments here"
+          ></textarea>
+          <div *ngIf="formControls.comments.touched && formControls.comments.invalid">
+            <small class="text-danger" *ngIf="formControls.comments.errors?.required"
+              >Comments required</small
+            >
+            <small class="text-danger" *ngIf="formControls.comments.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.comments.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.comments.errors?.maxlength"
+              >Maximum length is {{ formControls.comments.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-12">
+          <div class="d-flex float-right">
+            <button type="button" class="btn btn-dark mr-1" (click)="modalRef.hide()">Close</button>
+            <app-loading-button
+              [disabled]="tagEmergencyCallForm.invalid"
+              [buttonText]="'Send Email'"
+              [title]="'Click to send email'"
+              [isLoading]="isLoading"
+              [loadingText]="'Sending email...'"
+              [hideTextOnSM]="true"
+              [buttonIconClass]="'fas fa-check'"
+            ></app-loading-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

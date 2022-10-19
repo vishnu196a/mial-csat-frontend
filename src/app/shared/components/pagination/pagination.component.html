@@ -1,0 +1,65 @@
+<div
+  class="d-block justify-content-center d-sm-flex justify-content-sm-end align-items-center py-2 mr-sm-3"
+  *ngIf="pagination && pagination.total_count"
+>
+  <div class="d-flex justify-content-center align-items-center">
+    <span class="d-none d-sm-block">Per page</span>
+    <div class="d-none d-sm-block ml-1">
+      <select class="form-control" (change)="onPerPageChange($event)">
+        <option
+          *ngFor="let option of perPageOptions"
+          [value]="option"
+          [selected]="option === pagination.per_page"
+        >
+          {{ option }}
+        </option>
+      </select>
+    </div>
+    <div class="ml-2">
+      {{ pagination.start_at }} to {{ pagination.end_at }} of
+      {{ pagination.total_count }}
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center">
+    <button
+      class="btn btn-sm btn-pagination"
+      [disabled]="pagination.is_first_page"
+      title="Go to first page"
+      aria-label="firstpage"
+      (click)="onFirstPageClick()"
+    >
+      <i class="fa fa-angle-double-left mx-1 fa-lg" role="button" aria-hidden="true"></i>
+    </button>
+    <button
+      class="btn btn-sm btn-pagination"
+      [disabled]="pagination.is_first_page"
+      title="Go to previous page"
+      aria-label="previouspage"
+      (click)="onPreviousPageClick()"
+    >
+      <i class="fa fa-angle-left mx-1 fa-lg" aria-hidden="true"></i>
+    </button>
+    <div>
+      Page
+      {{ pagination.current_page }} of {{ pagination.total_pages }}
+    </div>
+    <button
+      class="btn btn-sm btn-pagination"
+      [disabled]="pagination.is_last_page"
+      title="Go to next page"
+      aria-label="nextpage"
+      (click)="onNextPageClick()"
+    >
+      <i class="fa fa-angle-right mx-1 fa-lg" aria-hidden="true"></i>
+    </button>
+    <button
+      class="btn btn-sm btn-pagination"
+      [disabled]="pagination.is_last_page"
+      title="Go to last page"
+      aria-label="lastpage"
+      (click)="onLastPageClick()"
+    >
+      <i class="fa fa-angle-double-right mx-1 fa-lg" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

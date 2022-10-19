@@ -1,0 +1,78 @@
+<form [formGroup]="addContentForm" (submit)="onFormSubmit()" class="mt-4" autocomplete="off">
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-sm col-md order-1 order-md-0">
+          <button
+            class="btn btn-primary d-flex align-items-center"
+            type="button"
+            title="Back"
+            [disabled]="isLoading"
+            routerLink="../"
+          >
+            <span class="min-width-18px">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </span>
+            <span class="text ml-1 ml-sm-o d-none d-sm-block">Back</span>
+          </button>
+        </div>
+        <div class="col-md order-0 order-md-1">
+          <h2 class="text-center">Add</h2>
+        </div>
+        <div class="col-sm col-md order-2 mt-2 mt-sm-0">
+          <app-loading-button
+            class="float-right"
+            [disabled]="addContentForm.invalid"
+            [buttonText]="'Add'"
+            [title]="'Click to add'"
+            [isLoading]="isLoading"
+            [loadingText]="'Adding...'"
+            [hideTextOnSM]="true"
+            [buttonIconClass]="'fas fa-check'"
+          ></app-loading-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning" *ngIf="hasValidationError">
+      <p>Please fix the following</p>
+      <ul>
+        <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+      </ul>
+    </div>
+
+    <div class="card-body p-0 mt-1">
+      <div class="form-group col-12 col-md-6">
+        <label for="title"> Title <span class="text-danger">*</span></label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          placeholder="Enter title name"
+        />
+        <div *ngIf="formControls.title.touched && formControls.title.invalid">
+          <small class="text-danger" *ngIf="formControls.title.errors?.required"
+            >Title is required</small
+          >
+          <small class="text-danger" *ngIf="formControls.title.errors?.minlength"
+            >Minimum length required is
+            {{ formControls.title.errors.minlength.requiredLength }}</small
+          >
+          <small class="text-danger" *ngIf="formControls.title.errors?.maxlength"
+            >Maximum length is {{ formControls.title.errors.maxlength.requiredLength }}</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label for="content">Enter content <span class="text-danger">*</span></label>
+        <angular-editor [config]="editorConfig" formControlName="content"></angular-editor>
+        <div *ngIf="formControls.content.touched && formControls.content.invalid">
+          <small class="text-danger" *ngIf="formControls.content.errors?.required"
+            >Content is required</small
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

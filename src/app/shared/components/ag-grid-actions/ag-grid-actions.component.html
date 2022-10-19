@@ -1,0 +1,119 @@
+<button
+  *ngIf="hasInvite"
+  [disabled]="params.data.confirmed_at"
+  class="btn btn-outline-primary"
+  title="Invite"
+  aria-label="Invite"
+  (click)="onInvite()"
+>
+  <i class="fa fa-envelope" aria-hidden="true"></i>
+</button>
+<ng-template [ngxPermissionsOnly]="canView">
+  <button
+    *ngIf="hasDetails"
+    class="btn btn-outline-success"
+    title="View"
+    aria-label="view"
+    (click)="onView()"
+  >
+    <i class="fa fa-eye" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<ng-template [ngxPermissionsOnly]="canEdit">
+  <button
+    *ngIf="hasEdit"
+    class="btn btn-outline-primary mx-2"
+    title="Edit"
+    aria-label="edit"
+    (click)="onEdit()"
+  >
+    <i class="fa fa-pencil-alt" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<ng-template [ngxPermissionsOnly]="canDelete">
+  <button
+    *ngIf="hasDelete"
+    class="btn btn-outline-danger"
+    title="Delete"
+    aria-label="Delete"
+    (click)="onDelete()"
+    [disabled]="disableDelete === 'yes'"
+  >
+    <i class="fa fa-trash-alt" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<ng-template [ngxPermissionsOnly]="canDisable">
+  <button
+    *ngIf="hasDisable"
+    class="btn btn-outline-danger"
+    title="Mark As InActive"
+    [disabled]="params.data.is_active == 'InActive'"
+    aria-label="Disable"
+    (click)="onDisable()"
+  >
+    <i class="fa fa-ban" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<button
+  *ngIf="customButton"
+  [class]="customButton.btnClass"
+  [title]="customButton.btnTitle"
+  (click)="onCustomButtonClick()"
+>
+  <i [class]="customButton.iconClass" aria-hidden="true"></i>
+</button>
+<ng-template [ngxPermissionsOnly]="canTagCall">
+  <button
+    *ngIf="hasTag"
+    class="btn btn-outline-primary"
+    title="Click here to tag the call"
+    aria-label="Bill Paid"
+    (click)="onTagCall()"
+  >
+    <i class="fa fa-tags" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<ng-template [ngxPermissionsOnly]="canResend">
+  <button
+    *ngIf="hasResend"
+    class="btn btn-outline-primary"
+    title="Click here to resend invitation"
+    aria-label="resend"
+    [disabled]="params.data.status === 'Responded'"
+    (click)="onResend()"
+  >
+    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+  </button>
+</ng-template>
+
+<ng-template [ngxPermissionsOnly]="canView">
+  <button
+    *ngIf="hasReport"
+    class="btn btn-outline-primary"
+    title="Click here to view report"
+    aria-label="report"
+    (click)="onReport()"
+  >
+    <i class="fa fa-clipboard-list" aria-hidden="true"></i>
+  </button>
+</ng-template>
+<button
+  *ngIf="hasUpdateCall"
+  class="btn btn-outline-primary"
+  title="Click here to update the call"
+  aria-label="report"
+  (click)="onUpdateCall()"
+>
+  <i class="fa fa-check" aria-hidden="true"></i>
+</button>
+
+<button
+  *ngIf="hasDownload"
+  class="btn btn-outline-primary"
+  title="Click here to download report"
+  aria-label="report"
+  (click)="onDownload()"
+  [disabled]="params.data.status && params.data.status !== 'Done'"
+>
+  <i class="fa fa-download" aria-hidden="true"></i>
+</button>

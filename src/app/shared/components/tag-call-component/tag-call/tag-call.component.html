@@ -1,0 +1,285 @@
+<form [formGroup]="addCallTagForm" (submit)="onFormSubmit()" class="mt-4" autocomplete="off">
+  <div
+    class="card"
+    [style]="
+      showRed ? 'border-width:4px;border-color:red' : 'border-width:4px;border-color:lightgreen'
+    "
+  >
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-sm col-md order-1 order-md-0 d-flex justify-content-start">
+          <button
+            class="btn btn-primary d-flex align-items-center"
+            type="button"
+            title="Back"
+            [disabled]="isLoading"
+            (click)="location.back()"
+          >
+            <span class="min-width-18px">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </span>
+            <span class="text ml-1 ml-sm-o d-none d-sm-block">Back</span>
+          </button>
+        </div>
+        <div class="col-md order-0 order-md-1">
+          <h2 class="text-center">Tag Call</h2>
+        </div>
+        <div class="col-sm col-md order-2 mt-2 mt-sm-0 d-flex justify-content-end">
+          <button class="btn btn-secondary mr-3" (click)="clearData()">
+            Clear <span class="fa fa-eraser"></span>
+          </button>
+          <app-loading-button
+            class="d-flex float-right align-items-center"
+            [disabled]="addCallTagForm.invalid"
+            [buttonText]="'Tag Call'"
+            [title]="'Click to tag call'"
+            [isLoading]="isLoading"
+            [loadingText]="'Tagging call...'"
+            [hideTextOnSM]="true"
+            [buttonIconClass]="'fas fa-check'"
+          ></app-loading-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-warning" *ngIf="hasValidationError">
+      <p>Please fix the following</p>
+      <ul>
+        <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+      </ul>
+    </div>
+
+    <div class="row card-body pt-1">
+      <div class="col-12 d-flex justify-content-between">
+        <h5>Call Ref No : {{ callRefNo }}</h5>
+        <h5>Caller No : {{ callerNumber }}</h5>
+        <h5>Call Waiting Count : {{ callWaitingCount }}</h5>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="name"> Name </label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          placeholder="Enter Name"
+          (change)="handleFilter('name', $event.target.value)"
+        />
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="terminal">Terminal</label>
+        <ng-select
+          [items]="terminals"
+          [clearable]="true"
+          [searchable]="true"
+          bindValue="id"
+          bindLabel="name"
+          placeholder="Select Terminal"
+          formControlName="terminal"
+          notFoundText="No terminals found"
+          (change)="handleFilter('terminal', $event.id)"
+        >
+        </ng-select>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="category">Category <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="categories"
+          [clearable]="true"
+          [searchable]="true"
+          bindValue="id"
+          bindLabel="name"
+          (change)="getSubCategoriesNamesIds()"
+          placeholder="Select Category"
+          formControlName="category"
+          notFoundText="No categories found"
+          (change)="handleFilter('category', $event ? '$event.id' : '')"
+        >
+        </ng-select>
+        <div *ngIf="formControls.category.touched && formControls.category.invalid">
+          <small class="text-danger" *ngIf="formControls.category.errors?.required"
+            >Category is required</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="subCategory">Sub Category <span class="text-danger">*</span></label>
+        <ng-select
+          [items]="subCategories"
+          [clearable]="true"
+          [searchable]="true"
+          bindValue="id"
+          bindLabel="name"
+          placeholder="Select Sub category"
+          formControlName="subCategory"
+          notFoundText="No sub categories found"
+          (change)="handleFilter('subCategory', $event ? '$event.id' : '')"
+        >
+        </ng-select>
+        <div *ngIf="formControls.subCategory.touched && formControls.subCategory.invalid">
+          <small class="text-danger" *ngIf="formControls.subCategory.errors?.required"
+            >Sub category is required</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="email">Email Address </label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          formControlName="email"
+          (change)="handleFilter('email', $event.target.value)"
+        />
+        <div *ngIf="formControls.email.touched && formControls.email.invalid">
+          <small class="text-danger" *ngIf="formControls.email.errors?.pattern"
+            >Enter a valid email</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="question"> Question <span class="text-danger">*</span></label>
+        <textarea
+          type="text"
+          id="question"
+          formControlName="question"
+          class="form-control"
+          placeholder="Enter question here"
+          (change)="handleFilter('question', $event.target.value)"
+        ></textarea>
+        <div *ngIf="formControls.question.touched && formControls.question.invalid">
+          <small class="text-danger" *ngIf="formControls.question.errors?.required"
+            >Question is required</small
+          >
+          <small class="text-danger" *ngIf="formControls.question.errors?.minlength"
+            >Minimum length required is
+            {{ formControls.question.errors.minlength.requiredLength }}</small
+          >
+          <small class="text-danger" *ngIf="formControls.question.errors?.maxlength"
+            >Maximum length is {{ formControls.question.errors.maxlength.requiredLength }}</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label for="answer"> Answer <span class="text-danger">*</span></label>
+        <textarea
+          type="text"
+          id="answer"
+          formControlName="answer"
+          class="form-control"
+          placeholder="Enter answer here"
+          (change)="handleFilter('answer', $event.target.value)"
+        ></textarea>
+        <div *ngIf="formControls.answer.touched && formControls.answer.invalid">
+          <small class="text-danger" *ngIf="formControls.answer.errors?.required"
+            >Answer is required</small
+          >
+          <small class="text-danger" *ngIf="formControls.answer.errors?.minlength"
+            >Minimum length required is
+            {{ formControls.answer.errors.minlength.requiredLength }}</small
+          >
+          <small class="text-danger" *ngIf="formControls.answer.errors?.maxlength"
+            >Maximum length is {{ formControls.answer.errors.maxlength.requiredLength }}</small
+          >
+        </div>
+      </div>
+      <div class="form-group col-12 col-md-3">
+        <label>Mode of Call <span class="text-danger">*</span> </label>
+        <div class="row pl-3">
+          <div class="col-12 col-md-6 m-0">
+            <div class="row d-flex align-items-center">
+              <label class="m-0">
+                <input
+                  type="radio"
+                  formControlName="optionText"
+                  [attr.disabled]="disableOption"
+                  value="1"
+                />
+                <span class="ml-1">Query</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 m-0">
+            <div class="row d-flex align-items-center">
+              <label class="m-0">
+                <input
+                  type="radio"
+                  formControlName="optionText"
+                  (change)="openModal('request')"
+                  value="2"
+                  [attr.disabled]="disableOption"
+                />
+                <span class="ml-1">Request</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 m-0">
+            <div class="row d-flex align-items-center">
+              <label class="m-0">
+                <input
+                  type="radio"
+                  formControlName="optionText"
+                  (change)="openModal('feedback')"
+                  value="3"
+                  [attr.disabled]="disableOption"
+                />
+                <span class="ml-1">Feedback</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 m-0">
+            <div class="row d-flex align-items-center">
+              <label class="m-0">
+                <input
+                  type="radio"
+                  formControlName="optionText"
+                  (change)="openModal('emergency')"
+                  value="4"
+                  [attr.disabled]="disableOption"
+                />
+                <span class="ml-1">Emergency</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-12 m-0">
+            <div class="row d-flex align-items-center">
+              <label class="m-0">
+                <input
+                  type="radio"
+                  formControlName="optionText"
+                  (change)="openModal('business')"
+                  value="5"
+                  [attr.disabled]="disableOption"
+                />
+                <span class="ml-1">Bussiness Enquiry</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="card">
+  <div class="card-header">
+    <h2 class="text-center">Call Tag History</h2>
+  </div>
+  <div class="card-body p-0">
+    <app-ag-grid
+      [rowData]="CallTags"
+      [columnDefs]="columnDefs"
+      [defaultColumnDefs]="defaultColumDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [canView]="permissionList.canViewTagHistory"
+      (gridReady)="onGridReady($event)"
+    >
+    </app-ag-grid>
+    <app-pagination
+      [pagination]="pagination"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

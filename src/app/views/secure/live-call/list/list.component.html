@@ -1,0 +1,51 @@
+<div
+  class="card mt-4"
+  [style]="
+    showRed ? 'border-width:4px;border-color:red' : 'border-width:4px;border-color:lightgreen'
+  "
+>
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm col-md order-1 order-md-0"></div>
+      <div class="col-md order-0 order-md-1">
+        <h2 class="text-center">Live Call</h2>
+      </div>
+      <div class="col-sm col-md order-2 mt-2 mt-sm-0">
+        <button
+          class="btn btn-primary btn-ripple float-right rounded-pill d-flex align-items-center"
+          title="Click to add new terminal"
+          routerLink="./new"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          <span class="d-none d-sm-block ml-1">Add Manual Call Tag</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="d-flex justify-content-between p-2">
+      <h5>Call waiting count : {{ callWaitingCount }}</h5>
+      <h5>Call abandoned count : {{ callAbandonedCount }}</h5>
+      <h5>Call attended count : {{ callAttendedCount }}</h5>
+    </div>
+    <app-ag-grid
+      [rowData]="liveCalls"
+      [columnDefs]="columnDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [canView]="permissionList.canViewCategory"
+      [hasInvite]="false"
+      [hasDetails]="viewOrTag"
+      [hasEdit]="false"
+      [hasDelete]="false"
+      [hasDetails]="false"
+      [hasTag]="!viewOrTag"
+      (gridReady)="onGridReady($event)"
+      (callTag)="onTagCall($event)"
+      (view)="onView($event)"
+      [rowStyle]="rowStyle"
+    >
+    </app-ag-grid>
+  </div>
+</div>
+
+<app-untagged-calls></app-untagged-calls>

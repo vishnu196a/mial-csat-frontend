@@ -1,0 +1,49 @@
+@use 'colors';
+
+app-header {
+  .navbar-toggler {
+    position: absolute;
+  }
+  .navbar-brand {
+    margin-left: 40px;
+    .navbar-brand-minimized {
+      margin-left: 104px;
+    }
+  }
+}
+
+.app-body main {
+  background-color: colors.$white;
+}
+
+@media screen and (min-width: 992px) {
+  .sidebar-minimized .app-body .nav-link i img {
+    width: 30px;
+  }
+}
+
+.sidebar {
+  .sidebar-nav {
+    padding: 0;
+    .nav-link {
+      &:hover.active {
+        background: colors.$primary;
+        color: colors.$white;
+      }
+      &.active {
+        img {
+          filter: invert(24%) sepia(59%) saturate(1537%) hue-rotate(208deg) brightness(92%)
+            contrast(96%);
+        }
+      }
+      &.active:hover img,
+      img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(337deg) brightness(104%)
+          contrast(102%);
+      }
+      img {
+        width: 20px;
+      }
+    }
+  }
+}

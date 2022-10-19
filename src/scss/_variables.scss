@@ -1,0 +1,37 @@
+// Variable overrides
+@use './colors';
+@use './fonts';
+
+$screen-xs-min: 280px;
+$screen-xs-max: 480px;
+$screen-sm-max: 768px;
+$screen-md-max: 992px;
+$screen-lg-max: 1200px;
+
+$theme-colors: (
+  'primary': colors.$primary,
+  'primary-light': colors.$primary-light,
+  'warning': colors.$secondary,
+  'light': colors.$white,
+  'danger': colors.$danger,
+  'dark': colors.$grey-secondary,
+);
+
+$primary_font: 'Calibri';
+
+$thin: 100;
+$light: 300;
+$regular: 400;
+$bold: 700;
+
+$font-xs: 12px;
+$font-sm: 14px;
+$primary-fs: 16px;
+$font-md: 18px;
+$font-lg: 20px;
+
+body {
+  font-family: $primary_font !important;
+  font-size: $primary-fs !important;
+  font-weight: $regular !important;
+}

@@ -1,0 +1,10 @@
+@use 'colors';
+
+button {
+  &:focus {
+    box-shadow: none;
+  }
+  &:not([disabled]) {
+    color: colors.$text-primary;
+  }
+}

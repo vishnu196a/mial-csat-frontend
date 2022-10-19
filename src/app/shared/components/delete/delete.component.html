@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">
+    <span *ngIf="deleteModelContent"> {{ deleteModelContent.title }} </span>
+  </h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <img src="assets/img/deleted.svg" class="modal-img" />
+  <p *ngIf="deleteModelContent" class="text-center">{{ deleteModelContent.message }}</p>
+  <div class="mb-2 text-center">
+    <button type="button" class="btn btn-dark mr-1" (click)="bsModalRef.hide()">Close</button>
+    <button type="button" class="btn btn-danger ml-1" (click)="onDelete()">Delete</button>
+  </div>
+</div>

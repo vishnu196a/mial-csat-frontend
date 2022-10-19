@@ -1,0 +1,180 @@
+<form [formGroup]="addUserForm" (submit)="onFormSubmit()" class="mt-4" autocomplete="off">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col order-1 order-sm-0">
+          <button
+            class="btn btn-primary d-flex align-items-center"
+            type="button"
+            title="Back"
+            [disabled]="isLoading"
+            routerLink="../"
+          >
+            <span class="min-width-18px">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </span>
+            <span class="text ml-1 ml-sm-o d-none d-sm-block">Back</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto order-0 order-sm-1">
+          <h2 class="text-center">Add User</h2>
+        </div>
+        <div class="col order-2 text-right">
+          <app-loading-button
+            [disabled]="addUserForm.invalid"
+            [buttonText]="'Add User'"
+            [title]="'Click to add User'"
+            [isLoading]="isLoading"
+            [loadingText]="'Adding User...'"
+            [hideTextOnSM]="true"
+            [buttonIconClass]="'fas fa-check'"
+          ></app-loading-button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-warning" *ngIf="hasValidationError">
+        <p>Please fix the following</p>
+        <ul>
+          <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label for="name"> Name <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Enter name"
+          />
+          <div *ngIf="formControls.name.touched && formControls.name.invalid">
+            <small class="text-danger" *ngIf="formControls.name.errors?.required"
+              >Name is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.name.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.maxlength"
+              >Maximum length is {{ formControls.name.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="role">Right <span class="text-danger">*</span></label>
+          <ng-select
+            [items]="rolesList"
+            [clearable]="false"
+            [searchable]="true"
+            bindValue="id"
+            bindLabel="name"
+            placeholder="Select role"
+            formControlName="role"
+            notFoundText="No roles found"
+          >
+          </ng-select>
+          <div *ngIf="formControls.role.touched && formControls.role.invalid">
+            <small class="text-danger" *ngIf="formControls.role.errors?.required"
+              >Role is required</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="employee">Employee number <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="employee"
+            formControlName="emp_no"
+            class="form-control"
+            placeholder="Enter employee number"
+            maxlength="10"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            allowPaste="false"
+            digitOnly
+          />
+          <div *ngIf="formControls.emp_no.touched && formControls.emp_no.invalid">
+            <small class="text-danger" *ngIf="formControls.emp_no.errors?.required"
+              >Employee number is required</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="mobile">Mobile No <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="mobile"
+            formControlName="mobile_no"
+            class="form-control"
+            placeholder="Enter mobile number"
+            maxlength="10"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            allowPaste="false"
+            digitOnly
+          />
+          <div *ngIf="formControls.mobile_no.touched && formControls.mobile_no.invalid">
+            <small class="text-danger" *ngIf="formControls.mobile_no.errors?.required"
+              >Mobile number is required</small
+            >
+            <small
+              class="text-danger"
+              *ngIf="formControls.mobile_no.errors?.minlength; else elseBlock"
+              >Minimum required length is
+              {{ formControls.mobile_no.errors.minlength.requiredLength }}
+            </small>
+            <small class="text-danger" *ngIf="formControls.mobile_no.errors?.maxlength"
+              >Maximum allowed length is
+              {{ formControls.mobile_no.errors.maxlength.requiredLength }}
+            </small>
+            <ng-template #elseBlock>
+              <small class="text-danger" *ngIf="formControls.mobile_no.errors?.pattern"
+                >Enter a valid mobile number
+              </small>
+            </ng-template>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="email">Email Address <span class="text-danger">*</span></label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+          <div *ngIf="formControls.email.touched && formControls.email.invalid">
+            <small class="text-danger" *ngIf="formControls.email.errors?.required"
+              >Email is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.email.errors?.pattern"
+              >Enter a valid email</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-6">
+          <label for="agent">Agent Code <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="agent"
+            formControlName="agent_code"
+            class="form-control"
+            placeholder="Enter agent code"
+            maxlength="10"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            allowPaste="false"
+            digitOnly
+          />
+          <div *ngIf="formControls.agent_code.touched && formControls.agent_code.invalid">
+            <small class="text-danger" *ngIf="formControls.agent_code.errors?.required"
+              >Agent code is required</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

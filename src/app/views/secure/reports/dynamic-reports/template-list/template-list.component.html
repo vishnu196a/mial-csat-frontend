@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">Select Template</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-6">
+      <app-search
+        [searchValue]="searchValue"
+        (search)="onSearch()"
+        (searchChange)="onSearchChange($event)"
+      ></app-search>
+    </div>
+  </div>
+
+  <app-ag-grid
+    [rowData]="templates"
+    [columnDefs]="columnDefs"
+    [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+    (gridReady)="onGridReady($event)"
+    (floatingFilter)="onFilterColumn($event)"
+    [stateName]="'templateListState'"
+    (doubleClick)="onDoubleClick($event)"
+  >
+  </app-ag-grid>
+  <app-pagination
+    [pagination]="pagination"
+    (pageChange)="onPageChange($event)"
+    (perPageChange)="onPerPageChange($event)"
+  >
+  </app-pagination>
+</div>

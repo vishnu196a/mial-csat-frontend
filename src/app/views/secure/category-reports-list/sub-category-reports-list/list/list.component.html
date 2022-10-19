@@ -1,0 +1,127 @@
+<div class="card mt-4">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col order-1 order-sm-0 d-flex align-items-center">
+        <button
+          class="btn btn-primary d-flex align-items-center"
+          title="Back"
+          [disabled]="isLoading"
+          routerLink="../"
+        >
+          <span class="min-width-18px">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+          </span>
+          <span class="text d-none d-sm-block">Back</span>
+        </button>
+        <app-search
+          class="ml-3"
+          [searchValue]="searchValue"
+          (search)="onSearch()"
+          (searchChange)="onSearchChange($event)"
+        ></app-search>
+      </div>
+      <div class="col-md order-0 order-md-1">
+        <h2 class="text-center">Sub Category Reports</h2>
+      </div>
+      <div class="col-sm col-md order-2 mt-2 mt-sm-0"></div>
+    </div>
+  </div>
+
+  <div class="card-body p-0">
+    <div class="row mt-2 m-0">
+      <div class="col-12 col-md-6" *ngIf="showPieChart">
+        <canvas
+          baseChart
+          [data]="pieChartData"
+          [chartType]="pieChartType"
+          [options]="pieChartOptions"
+          [labels]="pieChartLabels"
+          [legend]="pieChartLegend"
+        >
+        </canvas>
+        <div class="d-flex align-items-center col-6 justify-content-between pt-4 pr-0">
+          <h6 class="m-0 p-0 font-weight-bold">
+            From : <span class="font-weight-normal">{{ fromDate | date }}</span>
+          </h6>
+          <h6 class="m-0 p-0 font-weight-bold">
+            To : <span class="font-weight-normal"> {{ toDate | date }}</span>
+          </h6>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col">
+            <label for="date-input">From Date</label>
+            <input
+              id="date-input"
+              type="datetime-local"
+              placeholder="From Date"
+              class="form-control"
+              [max]="maxDate"
+              [min]="minDate"
+              [(ngModel)]="fromDate"
+              (change)="getListData()"
+            />
+          </div>
+          <div class="col">
+            <div class="align-items-center">
+              <label for="date-input">To Date</label>
+              <input
+                id="date-input"
+                type="datetime-local"
+                placeholder="To Date"
+                class="form-control"
+                [(ngModel)]="toDate"
+                [max]="maxDate"
+                [min]="minDate"
+                (change)="getListData()"
+              />
+              <small class="text-danger" *ngIf="toDateValidator"
+                >To date should be greater than from date</small
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h4 class="text-center">Sub category report top three list</h4>
+          <table class="table table-bordered" *ngIf="topThreeRecords">
+            <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Name</th>
+                <th>Count</th>
+                <th>Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of topThreeRecords; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.count }}</td>
+                <td>{{ data.percentage }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <app-ag-grid
+      [rowData]="subCategoryReports"
+      [columnDefs]="columnDefs"
+      [defaultColumnDefs]="defaultColumDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [canView]="permissionList.canViewSurveyForm"
+      (gridReady)="onGridReady($event)"
+      (floatingFilter)="onFilterColumn($event)"
+      [stateName]="'subCategoryReportsState'"
+      (sortChanged)="onSortChange($event)"
+    >
+    </app-ag-grid>
+    <app-pagination
+      [pagination]="pagination"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

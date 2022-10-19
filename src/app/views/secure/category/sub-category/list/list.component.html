@@ -1,0 +1,68 @@
+<div class="card mt-4">
+  <div class="col order-1 order-sm-0 d-flex align-items-center">
+    <button
+      class="btn btn-primary d-flex align-items-center m-3"
+      title="Back"
+      [disabled]="isLoading"
+      routerLink="../"
+    >
+      <span class="min-width-18px">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+      </span>
+      <span class="text d-none d-sm-block">Back</span>
+    </button>
+    <h4 class="ml-4 mt-2">Category Name : {{ categoryName }}</h4>
+  </div>
+
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm col-md order-1 order-md-0">
+        <app-search
+          [searchValue]="searchValue"
+          (search)="onSearch()"
+          (searchChange)="onSearchChange($event)"
+        ></app-search>
+      </div>
+      <div class="col-md order-0 order-md-1">
+        <h2 class="text-center">Sub Categories</h2>
+      </div>
+      <div class="col-sm col-md order-2 mt-2 mt-sm-0">
+        <ng-template [ngxPermissionsOnly]="permissionList.canAddUser">
+          <button
+            class="btn btn-primary btn-ripple float-right rounded-pill d-flex align-items-center"
+            title="Click to add new sub category"
+            (click)="onAddSubCategory()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            <span class="d-none d-sm-block ml-1">Add Sub Category</span>
+          </button>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <app-ag-grid
+      [rowData]="categories"
+      [columnDefs]="columnDefs"
+      [noRowsOverlayComponentParams]="noRowsOverlayComponentParams"
+      [deleteModelContent]="deleteModelContent"
+      hasDelete="true"
+      hasEdit="true"
+      [hasInvite]="false"
+      [hasDetails]="false"
+      [canEdit]="permissionList.canEditSubCategory"
+      [canDelete]="permissionList.canDeleteSubCategory"
+      (editRow)="onEdit($event)"
+      (gridReady)="onGridReady($event)"
+      (deleteRow)="onDelete($event)"
+      [stateName]="'subCategoryState'"
+    >
+    </app-ag-grid>
+    <app-pagination
+      [pagination]="pagination"
+      (pageChange)="onPageChange($event)"
+      (perPageChange)="onPerPageChange($event)"
+    >
+    </app-pagination>
+  </div>
+</div>

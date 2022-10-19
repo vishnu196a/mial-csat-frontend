@@ -1,0 +1,68 @@
+<form [formGroup]="addSubCategoryForm" (submit)="onFormSubmit()" class="mt-4" autocomplete="off">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col order-1 order-sm-0">
+          <button
+            class="btn btn-primary d-flex align-items-center"
+            type="button"
+            title="Back"
+            [disabled]="isLoading"
+            routerLink="../../"
+          >
+            <span class="min-width-18px">
+              <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            </span>
+            <span class="text ml-1 ml-sm-o d-none d-sm-block">Back</span>
+          </button>
+        </div>
+        <div class="col-12 col-sm-auto order-0 order-sm-1">
+          <h2 class="text-center">Add Sub Category</h2>
+        </div>
+        <div class="col order-2 text-right">
+          <app-loading-button
+            [disabled]="addSubCategoryForm.invalid"
+            [buttonText]="'Add Sub Category'"
+            [title]="'Click to add sub category'"
+            [isLoading]="isLoading"
+            [loadingText]="'Adding Sub Category...'"
+            [hideTextOnSM]="true"
+            [buttonIconClass]="'fas fa-check'"
+          ></app-loading-button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-warning" *ngIf="hasValidationError">
+        <p>Please fix the following</p>
+        <ul>
+          <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="form-group col-12 col-md-6">
+          <label for="name"> Name <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Enter sub category name"
+          />
+          <div *ngIf="formControls.name.touched && formControls.name.invalid">
+            <small class="text-danger" *ngIf="formControls.name.errors?.required"
+              >Name is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.name.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.name.errors?.maxlength"
+              >Maximum length is {{ formControls.name.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

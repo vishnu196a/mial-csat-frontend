@@ -1,0 +1,318 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Meet & Assist</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="tagRequestCallForm" (submit)="onFormSubmit()" class="mt-3" autocomplete="off">
+    <div class="card">
+      <div class="alert alert-warning" *ngIf="hasValidationError">
+        <p>Please fix the following</p>
+        <ul>
+          <li *ngFor="let validationError of validationErrors">{{ validationError }}</li>
+        </ul>
+      </div>
+      <div class="row card-body">
+        <div class="form-group col-12 col-md-4">
+          <label for="title">Title <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            class="form-control"
+            placeholder="Enter title"
+          />
+          <div *ngIf="formControls.title.touched && formControls.title.invalid">
+            <small class="text-danger" *ngIf="formControls.title.errors?.required"
+              >Title is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.title.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.title.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.title.errors?.maxlength"
+              >Maximum length is {{ formControls.title.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="firstName">First Name <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="name"
+            formControlName="firstName"
+            class="form-control"
+            placeholder="Enter firstName"
+          />
+          <div *ngIf="formControls.firstName.touched && formControls.firstName.invalid">
+            <small class="text-danger" *ngIf="formControls.firstName.errors?.required"
+              >First Name is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.firstName.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.firstName.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.firstName.errors?.maxlength"
+              >Maximum length is {{ formControls.firstName.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="lastName"> Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            formControlName="lastName"
+            class="form-control"
+            placeholder="Enter Last Name"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="dob"> Date Of Birth</label>
+          <input
+            id="dob"
+            type="date"
+            placeholder="From Date"
+            class="form-control"
+            formControlName="dateOfBirth"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="Address"> Address </label>
+          <textarea
+            type="text"
+            id="Address"
+            formControlName="address"
+            class="form-control"
+            placeholder="Enter Address here"
+          ></textarea>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="city"> City</label>
+          <input
+            type="text"
+            id="city"
+            formControlName="city"
+            class="form-control"
+            placeholder="Enter City"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="postalCode"> Postal Code</label>
+          <input
+            type="text"
+            id="postalCode"
+            formControlName="postalCode"
+            class="form-control"
+            placeholder="Enter Postal Code"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="country"> Country</label>
+          <input
+            type="text"
+            id="country"
+            formControlName="country"
+            class="form-control"
+            placeholder="Enter Country"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="mobile">Mobile No <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="mobile"
+            formControlName="mobileNo"
+            class="form-control"
+            placeholder="Enter mobile number"
+            maxlength="10"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            allowPaste="false"
+            digitOnly
+          />
+          <div *ngIf="formControls.mobileNo.touched && formControls.mobileNo.invalid">
+            <small class="text-danger" *ngIf="formControls.mobileNo.errors?.required"
+              >Mobile number is required</small
+            >
+            <small
+              class="text-danger"
+              *ngIf="formControls.mobileNo.errors?.minlength; else elseBlock"
+              >Minimum required length is
+              {{ formControls.mobileNo.errors.minlength.requiredLength }}
+            </small>
+            <small class="text-danger" *ngIf="formControls.mobileNo.errors?.maxlength"
+              >Maximum allowed length is {{ formControls.mobileNo.errors.maxlength.requiredLength }}
+            </small>
+            <ng-template #elseBlock>
+              <small class="text-danger" *ngIf="formControls.mobileNo.errors?.pattern"
+                >Enter a valid mobile number
+              </small>
+            </ng-template>
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="telephone"> Telephone</label>
+          <input
+            type="text"
+            id="telephone"
+            formControlName="telephone"
+            class="form-control"
+            placeholder="Enter Telephone"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="email">Email Address </label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            formControlName="email"
+          />
+          <div *ngIf="formControls.email.touched && formControls.email.invalid">
+            <small class="text-danger" *ngIf="formControls.email.errors?.pattern"
+              >Enter a valid email</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="nationality"> Nationality</label>
+          <input
+            type="text"
+            id="nationality"
+            formControlName="nationality"
+            class="form-control"
+            placeholder="Enter Nationality"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="passportNumber"> Passport Number</label>
+          <input
+            type="text"
+            id="passportNumber"
+            formControlName="passportNumber"
+            class="form-control"
+            placeholder="Enter Passport Number"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="placeOfMake">Place Of Make </label>
+          <input
+            type="text"
+            id="placeOfMake"
+            formControlName="placeOfMake"
+            class="form-control"
+            placeholder="Enter Place of Make"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="portOfDestination">Port Of Destination </label>
+          <input
+            type="text"
+            id="portOfDestination"
+            formControlName="portOfDestination"
+            class="form-control"
+            placeholder="Enter Port Of Destination"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="doi"> Date Of Issue</label>
+          <input
+            id="doi"
+            type="date"
+            placeholder="From Date"
+            class="form-control"
+            formControlName="dateOfIssue"
+          />
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="contactEmail"
+            >Contact Person Email Id <small>(separate email Ids by ";")</small>
+            <span class="text-danger">*</span></label
+          >
+
+          <input
+            type="text"
+            class="form-control"
+            id="contactEmail"
+            formControlName="contactEmail"
+            placeholder="Enter Contact Email"
+          />
+          <div *ngIf="formControls.contactEmail.touched && formControls.contactEmail.invalid">
+            <small class="text-danger" *ngIf="formControls.contactEmail.errors?.required"
+              >Contact person Email is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.contactEmail.errors?.pattern"
+              >Enter a valid Contact Email</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="subject"> Subject <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="subject"
+            formControlName="subject"
+            class="form-control"
+            placeholder="Enter Subject"
+          />
+          <div *ngIf="formControls.subject.touched && formControls.subject.invalid">
+            <small class="text-danger" *ngIf="formControls.subject.errors?.required"
+              >Subject is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.subject.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.subject.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.subject.errors?.maxlength"
+              >Maximum length is {{ formControls.subject.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4">
+          <label for="meetAndAssist"> Meet & Assist <span class="text-danger">*</span></label>
+          <textarea
+            type="text"
+            id="meetAndAssist"
+            formControlName="meetAndAssist"
+            class="form-control"
+          ></textarea>
+          <div *ngIf="formControls.meetAndAssist.touched && formControls.meetAndAssist.invalid">
+            <small class="text-danger" *ngIf="formControls.meetAndAssist.errors?.required"
+              >Meet & Assist information is required</small
+            >
+            <small class="text-danger" *ngIf="formControls.meetAndAssist.errors?.minlength"
+              >Minimum length required is
+              {{ formControls.meetAndAssist.errors.minlength.requiredLength }}</small
+            >
+            <small class="text-danger" *ngIf="formControls.meetAndAssist.errors?.maxlength"
+              >Maximum length is
+              {{ formControls.meetAndAssist.errors.maxlength.requiredLength }}</small
+            >
+          </div>
+        </div>
+        <div class="form-group col-12 col-md-4 d-flex align-items-center">
+          <label class="m-0 p-0">
+            <input type="checkbox" formControlName="mailToFeedbackTeam" value="true" />
+            <span class="ml-2">Mail To CCC</span>
+          </label>
+        </div>
+
+        <div class="form-group col-12 d-flex justify-content-end align-items-end">
+          <button type="button" class="btn btn-dark mr-1" (click)="modalRef.hide()">Close</button>
+          <app-loading-button
+            [disabled]="tagRequestCallForm.invalid"
+            [buttonText]="'Send Email'"
+            [title]="'Click to send email'"
+            [isLoading]="isLoading"
+            [loadingText]="'Sending email...'"
+            [hideTextOnSM]="true"
+            [buttonIconClass]="'fas fa-check'"
+          ></app-loading-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

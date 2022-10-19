@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'Calibri';
+  src: url('/assets/fonts/Light/Calibri-Light.woff2') format('woff2'),
+    url('/assets/fonts/Light/Calibri-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibri';
+  src: url('/assets/fonts/Regular/Calibri.woff2') format('woff2'),
+    url('/assets/fonts/Regular/Calibri.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Calibri';
+  src: url('/assets/fonts/Bold/Calibri-Bold.woff2') format('woff2'),
+    url('/assets/fonts/Bold/Calibri-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}

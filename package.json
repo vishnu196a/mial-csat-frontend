@@ -1,9 +1,9 @@
 {
-  "name": "MIAL-CRM",
+  "name": "MIAL-CSAT",
   "version": "1.0.0",
-  "description": "MIAL CRM",
+  "description": "MIAL CSAT",
   "author": {
-    "github": "https://github.com/yavar-tech/mial-crm-frontend"
+    "github": "https://github.com/yavar-tech/mial-csat-frontend"
   },
   "license": "MIT",
   "scripts": {

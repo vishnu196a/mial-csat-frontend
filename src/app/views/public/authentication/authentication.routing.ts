@@ -5,7 +5,7 @@ import { SurveyFormComponent } from '@public/survey-form/survey-form.component';
 const routes: Routes = [
   {
     path: '',
-    children: [{ path: 'survey_form_invitation', component: SurveyFormComponent }],
+    component: SurveyFormComponent,
   },
 ];
 

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SurveyInvitationForm, SurveyResponse, SurveyResponseForm } from './survey-list.model';
+import { SurveyInvitationForm, SurveyResponse, SurveyResponseForm } from './survey-form.model';
 
 @Injectable({
   providedIn: 'root',

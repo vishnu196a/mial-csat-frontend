@@ -6,11 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'live_call',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
     loadChildren: () =>
       import('@public/authentication/authentication.module').then(
         (module) => module.AuthenticationModule

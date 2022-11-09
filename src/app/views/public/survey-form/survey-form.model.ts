@@ -42,3 +42,11 @@ export interface Questions {
 export type DynamicQuestions = Questions & {
   dependent_questions?: Questions[];
 };
+
+export enum CardStates {
+  DEFAULT = 'default',
+  FLIPPED = 'flipped',
+}
+export interface CardState {
+  state: CardStates;
+}

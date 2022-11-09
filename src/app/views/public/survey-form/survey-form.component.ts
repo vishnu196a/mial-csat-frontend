@@ -23,7 +23,6 @@ import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './survey-form.component.html',
-  styleUrls: ['../authentication/forgot-password/forgot-password.component.scss'],
 
   animations: [
     trigger('cardFlip', [

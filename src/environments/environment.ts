@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://crmdevapi.codingtown.com',
+  apiUrl: 'http://crmcsatdevapi.codingtown.com',
 };

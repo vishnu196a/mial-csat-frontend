@@ -8,7 +8,6 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { StoreModule } from '@ngrx/store';
-import { DefaultLayoutComponent } from '@shared/containers/default-layout/default-layout.component';
 import { AuthenticationGuard } from '@shared/guards/authentication.guard';
 import { ErrorInterceptor } from '@shared/interceptor/error.interceptor';
 import { TokenInterceptor } from '@shared/interceptor/token.interceptor';
@@ -21,9 +20,6 @@ import { AppComponent } from './app.component';
 import { metaReducers } from './app.meta-reducer';
 import { appReducers } from './app.reducer';
 import { AppRoutingModule } from './app.routing';
-import { SsoComponent } from './views/public/sso/sso.component';
-
-const APP_CONTAINERS = [DefaultLayoutComponent];
 
 @NgModule({
   imports: [
@@ -48,7 +44,7 @@ const APP_CONTAINERS = [DefaultLayoutComponent];
     AngularEditorModule,
     ChartsModule,
   ],
-  declarations: [AppComponent, ...APP_CONTAINERS, SsoComponent],
+  declarations: [AppComponent],
   providers: [
     AuthenticationGuard,
     {

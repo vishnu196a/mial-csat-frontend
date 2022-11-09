@@ -1,6 +1,4 @@
 import { INavData } from '@coreui/angular';
-import { CustomButton } from '@shared/components/ag-grid-actions/ag-grid-actions.component';
-import { AgGridComponent } from '@shared/components/ag-grid/ag-grid.component';
 import { ROLES } from '@shared/constants/constants';
 import { ColDef } from 'ag-grid-community';
 import moment from 'moment';
@@ -18,7 +16,6 @@ export interface ErrorResponse {
 }
 
 export interface AgGridContext {
-  componentParent: AgGridComponent;
   stateName: string;
   hasInvite: boolean;
   hasDetails: boolean;
@@ -36,7 +33,6 @@ export interface AgGridContext {
   canTagCall: string;
   canDisable: string;
   canResend: string;
-  customButton: CustomButton;
 }
 
 export interface Pagination {

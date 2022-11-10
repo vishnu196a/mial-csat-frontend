@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -11,11 +11,12 @@ export class SurveyListService {
   apiUrl = environment.apiUrl;
   constructor(private httpClient: HttpClient) {}
   getSurveyInvitationForm(token: string): Observable<SurveyInvitationForm> {
-    const headers: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+    let params: HttpParams = new HttpParams();
+    params = params.appendAll({
+      t: token,
     });
     return this.httpClient.get<SurveyInvitationForm>(`${this.apiUrl}/v1/surveys/invitation`, {
-      headers: headers,
+      params,
     });
   }
   addSurveyResponse(surveyForm: SurveyResponseForm): Observable<SurveyResponse> {

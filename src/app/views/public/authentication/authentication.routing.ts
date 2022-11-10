@@ -4,7 +4,7 @@ import { SurveyFormComponent } from '@public/survey-form/survey-form.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'fb',
     component: SurveyFormComponent,
   },
 ];

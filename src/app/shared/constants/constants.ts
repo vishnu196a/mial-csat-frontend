@@ -1,5 +1,4 @@
 import { Validators } from '@angular/forms';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Role } from '@shared/models/shared.model';
 
 export const REGEX_PATTERNS = {
@@ -98,31 +97,6 @@ export const PERMISSIONS = {
     PERMISSION_LIST.canViewContacts,
     PERMISSION_LIST.canViewTagHistory,
   ],
-};
-
-export const EDITER_CONFIG: AngularEditorConfig = {
-  editable: true,
-  spellcheck: true,
-  height: '50rem',
-  minHeight: '5rem',
-  placeholder: 'Enter text here...',
-  translate: 'no',
-  defaultParagraphSeparator: 'p',
-  defaultFontName: 'Arial',
-  sanitize: false,
-  toolbarHiddenButtons: [['insertVideo']],
-};
-
-export const EDITER_CONFIG_VIEW: AngularEditorConfig = {
-  editable: false,
-  spellcheck: true,
-  showToolbar: false,
-  height: 'auto',
-  minHeight: '5rem',
-  placeholder: 'Enter text here...',
-  translate: 'no',
-  defaultParagraphSeparator: 'p',
-  defaultFontName: 'Arial',
 };
 
 export const SURVEY_TYPES = ['Options', 'Ratings', 'Multi Select', 'Free Text'];

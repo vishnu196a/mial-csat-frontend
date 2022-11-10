@@ -4,11 +4,10 @@ import { AppFooterModule } from '@coreui/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SurveyFormComponent } from '@public/survey-form/survey-form.component';
 import { SharedModule } from '@shared/shared.module';
-import { AuthenticationComponent } from './authentication.component';
 import { AuthenticationRoutingModule } from './authentication.routing';
 
 @NgModule({
   imports: [CommonModule, AuthenticationRoutingModule, AppFooterModule, SharedModule, NgbModule],
-  declarations: [SurveyFormComponent, AuthenticationComponent],
+  declarations: [SurveyFormComponent],
 })
 export class AuthenticationModule {}

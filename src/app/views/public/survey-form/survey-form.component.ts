@@ -9,16 +9,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  CardState,
-  CardStates,
-} from '@public/authentication/forgot-password/forgot-password.model';
+import { CardState, CardStates } from '@public/survey-form/survey-form.model';
 import {
   Questions,
   SurveyInvitationForm,
   SurveyResponseForm,
-} from '@secure/survey-form/survey-list.model';
-import { SurveyListService } from '@secure/survey-form/survey-list.service';
+} from '@public/survey-form/survey-form.model';
+import { SurveyListService } from '@public/survey-form/survey-form.service';
 import { ErrorResponse } from '@shared/models/shared.model';
 import { forEach } from 'lodash';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +23,6 @@ import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './survey-form.component.html',
-  styleUrls: ['../authentication/forgot-password/forgot-password.component.scss'],
 
   animations: [
     trigger('cardFlip', [

@@ -1,5 +1,5 @@
-<div class="card m-3 shadow border-primary" [@cardFlip]="data.state">
-  <div class="card-body face back" *ngIf="!isResponseSubmitted">
+<div class="card m-3 shadow border-primary">
+  <div class="card-body" *ngIf="!isResponseSubmitted">
     <form
       [formGroup]="viewSurveyForm"
       *ngIf="surveyFormDetails"

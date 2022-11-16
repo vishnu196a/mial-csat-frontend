@@ -65,7 +65,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.invitationToken = this.activatedRoute.snapshot.queryParams['invitation_token'];
+    this.invitationToken = this.activatedRoute.snapshot.queryParams['t'];
     this.viewSurveyForm = this.formBuilder.group({
       name: [null],
       questions: this.formBuilder.array([]),

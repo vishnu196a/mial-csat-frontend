@@ -47,7 +47,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else if (httpErrorResponse.status === 422) {
           errorResponse.hasValidationError = true;
           errorResponse.errorList = errorMessages;
-          errorResponse.message = 'Validation error';
+          errorResponse.message = errorMessages[0];
         } else if (httpErrorResponse.status === 500) {
           errorResponse.message = errorMessages[0] || 'Internal server error';
         } else {

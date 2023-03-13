@@ -92,7 +92,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       },
       (error: ErrorResponse) => {
-        this.toasterService.error(error.message);
+        this.toasterService.error(error.errorList[0]);
         this.hasDetails = false;
         this.isLoading = false;
       }
@@ -246,7 +246,7 @@ export class SurveyFormComponent implements OnInit, OnDestroy {
         this.isResponseSubmitted = true;
       },
       (error: ErrorResponse) => {
-        this.toasterService.error(error.message);
+        this.toasterService.error(error.errorList[0]);
         this.hasDetails = false;
         this.isLoading = false;
         this.isResponseSubmitted = false;

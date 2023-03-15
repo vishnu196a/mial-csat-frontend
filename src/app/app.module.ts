@@ -8,6 +8,7 @@ import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ErrorInterceptor } from '@shared/interceptor/error.interceptor';
+import { SharedModule } from '@shared/shared.module';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { AppRoutingModule } from './app.routing';
     HttpClientModule,
     NgSelectModule,
     AngularEditorModule,
+    SharedModule,
   ],
   declarations: [AppComponent],
   providers: [

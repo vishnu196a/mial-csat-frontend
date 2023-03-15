@@ -6,10 +6,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { LoadingButtonComponent } from './components/loading-button/loading-button.component';
-import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
-  declarations: [LoadingButtonComponent, TruncatePipe],
+  declarations: [LoadingButtonComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -9,13 +9,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CardState, CardStates } from '@public/survey-form/survey-form.model';
+import { CardState, CardStates } from 'src/app/views/survey-form/survey-form.model';
 import {
   Questions,
   SurveyInvitationForm,
   SurveyResponseForm,
-} from '@public/survey-form/survey-form.model';
-import { SurveyListService } from '@public/survey-form/survey-form.service';
+} from 'src/app/views/survey-form/survey-form.model';
+import { SurveyListService } from 'src/app/views/survey-form/survey-form.service';
 import { ErrorResponse } from '@shared/models/shared.model';
 import { forEach } from 'lodash';
 import { ToastrService } from 'ngx-toastr';

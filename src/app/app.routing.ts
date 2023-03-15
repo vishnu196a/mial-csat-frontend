@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SurveyFormComponent } from 'src/app/views/survey-form/survey-form.component';
 
 // Import Containers
 
 export const routes: Routes = [
   {
-    path: '',
-    loadChildren: () =>
-      import('@public/authentication/authentication.module').then(
-        (module) => module.AuthenticationModule
-      ),
+    path: 'fb',
+    component: SurveyFormComponent,
   },
 ];
 

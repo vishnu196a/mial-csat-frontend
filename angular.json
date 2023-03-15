@@ -20,10 +20,8 @@
             "styles": [
               "node_modules/@coreui/icons/css/free.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/leaflet/dist/leaflet.css",
-              "node_modules/leaflet.fullscreen/Control.FullScreen.css",
-              "src/scss/style.scss",
-              "src/scss/daterangepicker.scss"
+              "src/scss/daterangepicker.scss",
+              "src/scss/style.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules", "src/scss"]
@@ -32,9 +30,7 @@
             "allowedCommonJsDependencies": [
               "lodash",
               "classnames",
-              "leaflet.fullscreen",
               "event-source-polyfill",
-              "xlsx",
               "daterangepicker",
               "jquery"
             ]

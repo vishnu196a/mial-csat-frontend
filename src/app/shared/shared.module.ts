@@ -5,9 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DigitOnlyModule } from '@uiowa/digit-only';
-import { NgxPermissionsModule } from 'ngx-permissions';
 import { LoadingButtonComponent } from './components/loading-button/loading-button.component';
-import { GridModule } from './modules/grid.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
 
 @NgModule({
@@ -18,14 +16,11 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     HttpClientModule,
     FormsModule,
     NgSelectModule,
-    NgxPermissionsModule.forChild(),
     DigitOnlyModule,
-    GridModule,
   ],
   exports: [
     ReactiveFormsModule,
     LoadingButtonComponent,
-    NgxPermissionsModule,
     NgSelectModule,
     DigitOnlyModule,
     AngularEditorModule,

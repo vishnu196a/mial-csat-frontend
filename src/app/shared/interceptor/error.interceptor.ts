@@ -8,14 +8,11 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { SignOut } from '@public/authentication/store/authentication.action';
-import { Router } from '@angular/router';
 import { ErrorResponse } from '@shared/models/shared.model';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private store: Store, private router: Router) {}
+  constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
@@ -35,8 +32,6 @@ export class ErrorInterceptor implements HttpInterceptor {
         } else if (httpErrorResponse.status === 400) {
           errorResponse.message = 'Bad request';
         } else if (httpErrorResponse.status === 401) {
-          this.store.dispatch(new SignOut());
-          this.router.navigate(['/login']);
           errorResponse.message =
             errorMessages[0] ||
             'Sorry for the inconvenience, but you are not authorized to look into this page';

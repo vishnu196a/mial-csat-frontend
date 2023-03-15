@@ -44,7 +44,7 @@
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
-    "ng-multiselect-dropdown": "^0.2.14",
+    "ng-multiselect-dropdown": "^0.3.9",
     "ngx-perfect-scrollbar": "^10.1.0",
     "ngx-toastr": "^13.2.1",
     "rxjs": "^6.6.6",
